@@ -1,15 +1,22 @@
 ﻿var INVADERS = INVADERS || {};
 
-INVADERS.ship = function (canvas, image) {
+INVADERS.ship = function (spec) {
 
-    var that = {}; // Will do inheritance here shortly
+    // Init
+    spec.x = 500;
+    spec.y = 800;
 
-    var startX = 50;
-    var startY = 80;
+    var that = INVADERS.sprite(spec);
 
-    that.draw = function () {
-        canvas.draw(image, startX, startY);
-    }
+    that.move = function (actions) {
+        var deltaX = 0;
+
+        if (actions.leftDown) { deltaX = -5; }
+        if (actions.rightDown) { deltaX = 5; }
+
+        that.draw(deltaX, 0);
+        return that;
+    };
 
     return that;
 };
