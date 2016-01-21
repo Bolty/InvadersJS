@@ -1,4 +1,6 @@
-﻿var INVADERS = INVADERS || {};
+﻿"use strict";
+
+var INVADERS = INVADERS || {};
 
 INVADERS.ship = function (spec) {
 
@@ -14,7 +16,7 @@ INVADERS.ship = function (spec) {
         if (actions.leftDown) { deltaX = -5; }
         if (actions.rightDown) { deltaX = 5; }
 
-        that.draw(deltaX, 0);
+        that.draw(deltaX, 0, true);
         return that;
     };
 

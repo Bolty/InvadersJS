@@ -1,4 +1,6 @@
-﻿var INVADERS = INVADERS || {};
+﻿"use strict";
+
+var INVADERS = INVADERS || {};
 
 INVADERS.canvas = function () {
 
@@ -21,8 +23,17 @@ INVADERS.canvas = function () {
         return that;
     };
 
+    var isOnCanvas = function (img, x, y) {
+        var imageRectExtentX = (img.width * imageMultiply) + x,
+            imageRectExtentY = (img.height * imageMultiply) + y;
+
+        return x > 0 && imageRectExtentX < canvasCtx.canvas.width 
+            && y > 0 && imageRectExtentY < canvasCtx.canvas.height;
+    };
+
     return {
         draw: draw,
-        clear: clear
+        clear: clear,
+        isOnCanvas: isOnCanvas
     };
 };

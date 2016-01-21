@@ -1,4 +1,6 @@
-﻿var INVADERS = INVADERS || {};
+﻿"use strict";
+
+var INVADERS = INVADERS || {};
 INVADERS.services = INVADERS.services || {};
 
 INVADERS.services.imageService = {
@@ -22,7 +24,7 @@ INVADERS.services.imageService = {
             };
         };
 
-        for (i = 0; i < config.imageNames.length; i++) {
+        for (var i = 0; i < config.imageNames.length; i++) {
             loadImage(config.imageNames[i], config, callback);
         }
     }

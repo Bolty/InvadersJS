@@ -1,4 +1,6 @@
-﻿var INVADERS = INVADERS || {};
+﻿"use strict";
+
+var INVADERS = INVADERS || {};
 INVADERS.services = INVADERS.services || {};
 
 INVADERS.services.keyboardService = {
