@@ -6,8 +6,15 @@ INVADERS.controller = function () {
 
     var that = this;
 
-    var gameLoop = function() {
+    var gameLoop = function () {
+        that.canvas.clearCanvas();
         that.ship.move(that.actions);
+        that.alienFleet.move();
+
+        var shipCollision = that.canvas.spriteCollision(that.ship, that.alienFleet.fleet);
+        if (shipCollision) {
+            var x = true;
+        }
         //handleBullits();
         //handleAliens();
         //handleBombs();
@@ -25,6 +32,11 @@ INVADERS.controller = function () {
         that.ship = INVADERS.ship({
             canvas: that.canvas,
             image: that.images.Ship
+        }).draw();
+
+        that.alienFleet = INVADERS.alienFleet({
+            canvas: that.canvas,
+            image: that.images.AlienA
         }).draw();
     };
 
