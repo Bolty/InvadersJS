@@ -8,7 +8,7 @@ INVADERS.services.imageService = {
     getImages: function (callback) {
 
         var config = {
-            imageNames: ["Ship", "AlienA"],
+            imageNames: ["Ship", "AlienA", "Explosion1", "Explosion2", "Explosion3"],
             images: {},
             imageCount: 0
         };

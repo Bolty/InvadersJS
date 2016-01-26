@@ -13,7 +13,7 @@ INVADERS.controller = function () {
 
         var shipCollision = that.canvas.spriteCollision(that.ship, that.alienFleet.fleet);
         if (shipCollision) {
-            var x = true;
+            that.ship.kill()
         }
         //handleBullits();
         //handleAliens();
@@ -29,9 +29,15 @@ INVADERS.controller = function () {
     };
 
     var initSheet = function () {
+
+        var exp1 = that.images.Explosion1,
+            exp2 = that.images.Explosion2,
+            exp3 = that.images.Explosion3;
+
         that.ship = INVADERS.ship({
             canvas: that.canvas,
-            image: that.images.Ship
+            image: that.images.Ship,
+            explodeImages: [exp1, exp2, exp3, exp1, exp2, exp3, exp1, exp2, exp3, exp1, exp2, exp3, exp1, exp2, exp3]
         }).draw();
 
         that.alienFleet = INVADERS.alienFleet({

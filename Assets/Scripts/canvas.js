@@ -14,11 +14,16 @@ INVADERS.canvas = function () {
     canvasCtx.canvas.height = canvasSize;
 
     var draw = function (img, x, y) {
-        canvasCtx.drawImage(img, x, y, img.width * imageMultiply, img.height * imageMultiply);
+        if (img) {
+            canvasCtx.drawImage(img, x, y, img.width * imageMultiply, img.height * imageMultiply);
+        }
+
         return that;
     };
 
     var isOnCanvas = function (img, x, y) {
+        if (img === null) return false;
+
         var imageRectExtentX = (img.width * imageMultiply) + x,
             imageRectExtentY = (img.height * imageMultiply) + y;
 
@@ -35,15 +40,15 @@ INVADERS.canvas = function () {
 
         var sp1Left = sp1.getX(),
                sp1Top = sp1.getY(),
-               sp1Right = sp1Left + (sp1.getWidth() * imageMultiply),
-               sp1Bottom = sp1Top + (sp1.getHeight() * imageMultiply);
+               sp1Right = sp1Left + getSpriteWidth(sp1),
+               sp1Bottom = sp1Top + getSpriteHeight(sp1);
 
         for (var i = 0; i < spriteCollection.length; i++) {
             var sp2 = spriteCollection[i],
                 sp2Left = sp2.getX(),
                 sp2Top = sp2.getY(),
-                sp2Right = sp2Left + (sp2.getWidth() * imageMultiply),
-                sp2Bottom = sp2Top + (sp2.getHeight() * imageMultiply);
+                sp2Right = sp2Left + getSpriteWidth(sp2),
+                sp2Bottom = sp2Top + getSpriteHeight(sp2);
 
             var xPos = Math.max(sp1Left, sp2Left),
                 num1 = Math.min(sp1Right, sp2Right),
@@ -59,10 +64,20 @@ INVADERS.canvas = function () {
         return null;
     };
 
+    var getSpriteHeight = function (sprite) {
+        return sprite.imageHeight * imageMultiply;
+    };
+
+    var getSpriteWidth = function (sprite) {
+        return sprite.imageWidth * imageMultiply;
+    };
+
     return {
         draw: draw,
         clearCanvas: clearCanvas,
         isOnCanvas: isOnCanvas,
-        spriteCollision: spriteCollision
+        spriteCollision: spriteCollision,
+        getSpriteHeight: getSpriteHeight,
+        getSpriteWidth: getSpriteWidth
     };
 };
