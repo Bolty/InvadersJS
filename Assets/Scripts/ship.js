@@ -21,5 +21,14 @@ INVADERS.ship = function (spec) {
         return that;
     };
 
+    that.detectCrash = function (fleet) {
+        var hasCrashed = that.isColliding(fleet);
+        if (hasCrashed) {
+            that.kill();
+        }
+
+        return hasCrashed;
+    }
+
     return that;
 };

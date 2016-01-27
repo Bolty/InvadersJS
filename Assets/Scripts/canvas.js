@@ -12,6 +12,12 @@ INVADERS.canvas = function () {
 
     canvasCtx.canvas.width = canvasSize;
     canvasCtx.canvas.height = canvasSize;
+    canvasCtx.fillStyle = "white";
+    canvasCtx.font = (10 * imageMultiply) + 'px sans-serif';
+
+    var writeText = function (text, x, y) {
+        canvasCtx.fillText(text, x, y);
+    };
 
     var draw = function (img, x, y) {
         if (img) {
@@ -38,15 +44,15 @@ INVADERS.canvas = function () {
 
     var spriteCollision = function (sp1, spriteCollection) {
 
-        var sp1Left = sp1.getX(),
-               sp1Top = sp1.getY(),
+        var sp1Left = sp1.x,
+               sp1Top = sp1.y,
                sp1Right = sp1Left + getSpriteWidth(sp1),
                sp1Bottom = sp1Top + getSpriteHeight(sp1);
 
         for (var i = 0; i < spriteCollection.length; i++) {
             var sp2 = spriteCollection[i],
-                sp2Left = sp2.getX(),
-                sp2Top = sp2.getY(),
+                sp2Left = sp2.x,
+                sp2Top = sp2.y,
                 sp2Right = sp2Left + getSpriteWidth(sp2),
                 sp2Bottom = sp2Top + getSpriteHeight(sp2);
 
@@ -78,6 +84,7 @@ INVADERS.canvas = function () {
         isOnCanvas: isOnCanvas,
         spriteCollision: spriteCollision,
         getSpriteHeight: getSpriteHeight,
-        getSpriteWidth: getSpriteWidth
+        getSpriteWidth: getSpriteWidth,
+        writeText: writeText
     };
 };

@@ -17,8 +17,8 @@ INVADERS.bullets = function (spec) {
             that.shipBullets.push(INVADERS.bullet({
                 canvas: spec.canvas,
                 image: spec.image,
-                x: ship.getX(),
-                y: ship.getY()
+                x: ship.x,
+                y: ship.y
             }));
 
             actions.fire = false;
@@ -28,6 +28,7 @@ INVADERS.bullets = function (spec) {
     };
 
     that.move = function () {
+        that.shipBullets = INVADERS.services.arrayService.filter(that.shipBullets, 'y', 0, '>');
         that.draw();
         return that;
     };
@@ -42,6 +43,22 @@ INVADERS.bullets = function (spec) {
         }
 
         return that;
+    };
+
+    that.detectAlienShot = function (aliens) {
+        var killed = 0;
+
+        for (var i = 0; i < that.shipBullets.length; i++) {
+            var bullet = that.shipBullets[i];
+            var shot = bullet.isColliding(aliens);
+            if (shot != null) {
+                bullet.y = 0; // Will be removed on next draw
+                shot.sprite.kill();
+                killed++;
+            }
+        }
+
+        return killed;
     };
 
     return that;

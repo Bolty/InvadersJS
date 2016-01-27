@@ -15,9 +15,9 @@ INVADERS.alienFleet = function (spec) {
                 aliens.push(INVADERS.alien({
                     canvas: spec.canvas,
                     image: spec.image,
+                    explodeImages: spec.explodeImages,
                     x: column * 70,
                     y: row * 70,
-                    swoopChancePercent : 0.05,
                     moveSpeedX : 2,
                     moveSpeedY : 4
                 }));
@@ -29,16 +29,31 @@ INVADERS.alienFleet = function (spec) {
 
     var that = {
         fleet: getFleet(),
-        moving: "right"
+        moving: "right",
+        swoopChancePercent : 2
+    };
+
+    that.newSheet = function () {
+        that.fleet = getFleet();
+        that.swoopChancePercent++;
     };
 
     that.move = function () {
+
+        that.fleet = INVADERS.services.arrayService.filter(that.fleet, 'isInPlay', true, '==');
+
+        if ((Math.random() * 100) < that.swoopChancePercent) {
+            var index = Math.floor(Math.random() * that.fleet.length),
+                alien = that.fleet[index];
+            if (!alien.swooping && alien.isAlive()) alien.swooping = true;
+            that.fleet.swooping = true;
+        }
 
         // Check for change in direction of fleet
         for (var i = 0; i < that.fleet.length; i++) {
             var alien = that.fleet[i];
 
-            if (!alien.isSwooping() && !spec.canvas.isOnCanvas(spec.image, alien.getX(), 0)) {
+            if (!alien.swooping && !spec.canvas.isOnCanvas(spec.image, alien.x, 0)) {
                 that.moving = that.moving === "left" ? "right" : "left";
                 break;
             }

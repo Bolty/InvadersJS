@@ -12,20 +12,13 @@ INVADERS.controller = function () {
         that.bullets.fire(that.actions, that.ship).move();
         that.alienFleet.move();
 
-        var shipCollision = that.canvas.spriteCollision(that.ship, that.alienFleet.fleet);
-        if (shipCollision) {
-            that.ship.kill()
-        }
-        //handleBullits();
-        //handleAliens();
-        //handleBombs();
-        //checkForScreenComplete();
+        var shipHasCrashed = that.ship.detectCrash(that.alienFleet.fleet);
+        var aliensShotCount = that.bullets.detectAlienShot(that.alienFleet.fleet);
+        var sheetComplete = that.alienFleet.fleet.length === 0;
 
-        //if (!gameInPlay) {
-        //    clearScreen();
-        //    prepareForScreen(screen);
-        //    gameInPlay = true;
-        //}
+        that.scoreBoard.update(aliensShotCount);
+        if (sheetComplete) that.alienFleet.newSheet();
+
         window.requestAnimationFrame(gameLoop);
     };
 
@@ -44,12 +37,17 @@ INVADERS.controller = function () {
 
         that.alienFleet = INVADERS.alienFleet({
             canvas: that.canvas,
-            image: images.AlienA
+            image: images.AlienA,
+            explodeImages: explosionSequence
         });
 
         that.bullets = INVADERS.bullets({
             canvas: that.canvas,
             image: images.Bullet,
+        });
+
+        that.scoreBoard = INVADERS.scoreBoard({
+            canvas: that.canvas
         });
     };
 
