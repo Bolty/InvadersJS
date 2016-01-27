@@ -5,10 +5,12 @@ INVADERS.services = INVADERS.services || {};
 
 INVADERS.services.imageService = {
 
+    images: [],
+
     getImages: function (callback) {
 
         var config = {
-            imageNames: ["Ship", "AlienA", "Explosion1", "Explosion2", "Explosion3"],
+            imageNames: ["Ship", "AlienA", "Explosion1", "Explosion2", "Explosion3", "Bullet"],
             images: {},
             imageCount: 0
         };
@@ -19,6 +21,7 @@ INVADERS.services.imageService = {
             config.images[imgName].onload = function () {
                 config.imageCount++;
                 if (config.imageNames.length === config.imageCount) {
+                    INVADERS.services.imageService.images = config.images;
                     callback(config.images);
                 }
             };

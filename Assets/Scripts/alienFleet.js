@@ -4,7 +4,7 @@ var INVADERS = INVADERS || {};
 
 INVADERS.alienFleet = function (spec) {
 
-    spec.getFleet = function () {
+    var getFleet = function () {
 
         var aliens = [],
             rows = 5,
@@ -17,7 +17,7 @@ INVADERS.alienFleet = function (spec) {
                     image: spec.image,
                     x: column * 70,
                     y: row * 70,
-                    swoopChancePercent : 0.1,
+                    swoopChancePercent : 0.05,
                     moveSpeedX : 2,
                     moveSpeedY : 4
                 }));
@@ -28,7 +28,7 @@ INVADERS.alienFleet = function (spec) {
     };
 
     var that = {
-        fleet: spec.getFleet(),
+        fleet: getFleet(),
         moving: "right"
     };
 
@@ -36,7 +36,9 @@ INVADERS.alienFleet = function (spec) {
 
         // Check for change in direction of fleet
         for (var i = 0; i < that.fleet.length; i++) {
-            if (!spec.canvas.isOnCanvas(spec.image, that.fleet[i].getX(), 0)) {
+            var alien = that.fleet[i];
+
+            if (!alien.isSwooping() && !spec.canvas.isOnCanvas(spec.image, alien.getX(), 0)) {
                 that.moving = that.moving === "left" ? "right" : "left";
                 break;
             }
@@ -44,14 +46,6 @@ INVADERS.alienFleet = function (spec) {
 
         for (var i = 0; i < that.fleet.length; i++) {
             that.fleet[i].move(that.moving);
-        }
-
-        return that;
-    };
-
-    that.draw = function () {
-        for (var i = 0; i < that.fleet.length; i++) {
-            that.fleet[i].draw();
         }
 
         return that;
