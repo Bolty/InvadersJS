@@ -17,6 +17,17 @@
     }
 }
 
+.left-buttons {
+    position: absolute;
+    bottom: 0px;
+}
+
+.right-buttons {
+    position:absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
 .centred-container {
     background: black;
     display: inline-block;

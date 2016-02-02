@@ -52,9 +52,9 @@ INVADERS.controller = function () {
     };
 
     var startGame = function () {
-        INVADERS.services.keyboardService.init();
+        INVADERS.services.inputService.init();
 
-        that.actions = INVADERS.services.keyboardService.actions;
+        that.actions = INVADERS.services.inputService.actions;
         that.canvas = INVADERS.canvas();
         initSheet(INVADERS.services.imageService.images);
         gameLoop();
