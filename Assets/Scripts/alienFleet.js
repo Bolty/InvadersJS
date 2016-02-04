@@ -19,7 +19,7 @@ INVADERS.alienFleet = function (spec) {
                     x: column * 70,
                     y: row * 70,
                     moveSpeedX : 2,
-                    moveSpeedY : 4
+                    moveSpeedY : 6
                 }));
             }
         }
@@ -30,12 +30,14 @@ INVADERS.alienFleet = function (spec) {
     var that = {
         fleet: getFleet(),
         moving: "right",
-        swoopChancePercent : 2
+        swoopChancePercent: 1,
+        fireChancePercent: 2
     };
 
     that.newSheet = function () {
         that.fleet = getFleet();
-        that.swoopChancePercent++;
+        that.swoopChancePercent = that.swoopChancePercent + 0.5;
+        that.fireChancePercent++;
     };
 
     that.move = function () {
@@ -43,8 +45,7 @@ INVADERS.alienFleet = function (spec) {
         that.fleet = INVADERS.services.arrayService.filter(that.fleet, 'isInPlay', true, '==');
 
         if ((Math.random() * 100) < that.swoopChancePercent) {
-            var index = Math.floor(Math.random() * that.fleet.length),
-                alien = that.fleet[index];
+            var alien = that.getRandomAlien();
             if (!alien.swooping && alien.isAlive()) alien.swooping = true;
             that.fleet.swooping = true;
         }
@@ -65,6 +66,15 @@ INVADERS.alienFleet = function (spec) {
 
         return that;
     };
+
+    that.getRandomAlien = function () {
+        var index = Math.floor(Math.random() * that.fleet.length);
+        return that.fleet[index];
+    };
+
+    that.fireNow = function () {
+        return (Math.random() * 100) < that.fireChancePercent;
+    }
 
     return that;
 };

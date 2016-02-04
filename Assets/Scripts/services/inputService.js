@@ -16,7 +16,8 @@ INVADERS.services.inputService = {
         var that = this,
             fireButton = document.getElementById("fireButton"),
             leftButton = document.getElementById("leftButton"),
-            rightButton = document.getElementById("rightButton");
+            rightButton = document.getElementById("rightButton"),
+            buttonsContainer = document.getElementById("buttonsContainer");
 
         var applyTouchActionListener = function (button, touchType, action, val) {
             button.addEventListener(touchType, function (e) {
@@ -55,10 +56,15 @@ INVADERS.services.inputService = {
 
         window.addEventListener('keydown', keyDown, true);
         window.addEventListener('keyup', keyUp, true);
-        applyTouchActionListener(leftButton, 'touchstart', 'leftDown', true);
-        applyTouchActionListener(leftButton, 'touchend', 'leftDown', false);
-        applyTouchActionListener(rightButton, 'touchstart', 'rightDown', true);
-        applyTouchActionListener(rightButton, 'touchend', 'rightDown', false);
-        applyTouchActionListener(fireButton, 'touchstart', 'fire', true);
+
+        if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
+            applyTouchActionListener(leftButton, 'touchstart', 'leftDown', true);
+            applyTouchActionListener(leftButton, 'touchend', 'leftDown', false);
+            applyTouchActionListener(rightButton, 'touchstart', 'rightDown', true);
+            applyTouchActionListener(rightButton, 'touchend', 'rightDown', false);
+            applyTouchActionListener(fireButton, 'touchstart', 'fire', true);
+        } else {
+            buttonsContainer.className += ' hidden';
+        }
     }
 };

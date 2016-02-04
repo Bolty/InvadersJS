@@ -21,6 +21,10 @@ INVADERS.services.arrayService = {
                     if (propertyValue > value) result.push(array[i]);
                     break;
 
+                case '<':
+                    if (propertyValue < value) result.push(array[i]);
+                    break;
+
                 case '==':
                     if (propertyValue == value) result.push(array[i]);
                     break;

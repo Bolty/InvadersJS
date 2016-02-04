@@ -52,6 +52,10 @@
     height: 8%;
 }
 
+.hidden {
+    display: none;
+}
+
 .controlButton {
     width: 32%;
     border-radius: 5px;

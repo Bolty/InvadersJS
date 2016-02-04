@@ -9,10 +9,12 @@ INVADERS.controller = function () {
     var gameLoop = function () {
         that.canvas.clearCanvas();
         that.ship.move(that.actions);
-        that.bullets.fire(that.actions, that.ship).move();
+        that.bullets.shipFire(that.actions, that.ship).move();
         that.alienFleet.move();
+        that.bullets.alienFire(that.alienFleet.fireNow(), that.alienFleet.getRandomAlien()).move();
 
         var shipHasCrashed = that.ship.detectCrash(that.alienFleet.fleet);
+        var shipHasBeenShot = that.bullets.detectShipShot(that.ship);
         var aliensShotCount = that.bullets.detectAlienShot(that.alienFleet.fleet);
         var sheetComplete = that.alienFleet.fleet.length === 0;
 

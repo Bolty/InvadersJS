@@ -10,7 +10,7 @@ INVADERS.alien = function (spec) {
         swoopCount = 0;
 
     var getDeltaX = function (direction) {
-        if (that.swooping) return Math.sin(swoopCount / 20.0);
+        if (that.swooping) return (Math.sin(swoopCount / 20.0) * 4);
         return direction === "right" ? spec.moveSpeedX : 0 - spec.moveSpeedX;
     };
 
