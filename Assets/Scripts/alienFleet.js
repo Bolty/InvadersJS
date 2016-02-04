@@ -30,7 +30,7 @@ INVADERS.alienFleet = function (spec) {
     var that = {
         fleet: getFleet(),
         moving: "right",
-        swoopChancePercent: 1,
+        swoopChancePercent: 0.5,
         fireChancePercent: 2
     };
 

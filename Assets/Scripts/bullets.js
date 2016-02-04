@@ -2,6 +2,11 @@
 
 var INVADERS = INVADERS || {};
 
+INVADERS.bullet = function (spec) {
+    var that = INVADERS.sprite(spec);
+    return that;
+};
+
 INVADERS.bullets = function (spec) {
 
     var shipBulletSpeed = 10,

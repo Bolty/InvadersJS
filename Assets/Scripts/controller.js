@@ -8,6 +8,7 @@ INVADERS.controller = function () {
 
     var gameLoop = function () {
         that.canvas.clearCanvas();
+        that.stars.draw();
         that.ship.move(that.actions);
         that.bullets.shipFire(that.actions, that.ship).move();
         that.alienFleet.move();
@@ -30,6 +31,11 @@ INVADERS.controller = function () {
             exp2 = images.Explosion2,
             exp3 = images.Explosion3,
             explosionSequence = [exp1, exp2, exp3, exp1, exp2, exp3, exp1, exp2, exp3, exp1, exp2, exp3, exp1, exp2, exp3];
+
+        that.stars = INVADERS.stars({
+            canvas: that.canvas,
+            image: images.Star,
+        }).draw();
 
         that.ship = INVADERS.ship({
             canvas: that.canvas,
