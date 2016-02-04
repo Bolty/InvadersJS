@@ -10,7 +10,7 @@ INVADERS.scoreBoard = function (spec) {
 
     that.update = function (extraScore) {
         that.score += extraScore;
-        spec.canvas.writeText(that.score, 0, 950);
+        spec.canvas.writeText(that.score, 0, 0);
     };
 
     return that;

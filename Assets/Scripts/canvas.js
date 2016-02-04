@@ -14,6 +14,7 @@ INVADERS.canvas = function () {
     canvasCtx.canvas.height = canvasSize;
     canvasCtx.fillStyle = "white";
     canvasCtx.font = (10 * imageMultiply) + 'px sans-serif';
+    canvasCtx.textBaseline = "top";
 
     var writeText = function (text, x, y) {
         canvasCtx.fillText(text, x, y);

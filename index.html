@@ -21,15 +21,14 @@
 </head>
 <body>
     <div class="centred-container max-square">
-        <canvas id="game-canvas"></canvas>
-    </div>
-    <div class="left-buttons">
-        <button id="fireButtonLeft" class="fireButton">[ SPACE ]</button>
-        <button id="leftButton" class="">[ LEFT ]</button>
-    </div>
-    <div class="right-buttons">
-        <button id="fireButtonRight" class="fireButton">[ SPACE ]</button>
-        <button id="rightButton" class="">[ RIGHT ]</button>
+        <div class="inner-container">
+            <canvas id="game-canvas"></canvas>
+            <div class="buttons">
+                <button id="leftButton" class="controlButton">&larr;</button>
+                <button id="fireButton" class="controlButton">&uarr;</button>
+                <button id="rightButton" class="controlButton">&rarr;</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>

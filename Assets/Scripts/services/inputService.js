@@ -14,15 +14,16 @@ INVADERS.services.inputService = {
     init: function () {
 
         var that = this,
-            fireButtonLeft = document.getElementById("fireButtonLeft"),
-            fireButtonRight = document.getElementById("fireButtonRight"),
+            fireButton = document.getElementById("fireButton"),
             leftButton = document.getElementById("leftButton"),
             rightButton = document.getElementById("rightButton");
 
-        var applyTouchAction = function(action, val, e) {
-            that.actions[action] = val;
-            e.preventDefault();
-            return false;
+        var applyTouchActionListener = function (button, touchType, action, val) {
+            button.addEventListener(touchType, function (e) {
+                that.actions[action] = val;
+                e.preventDefault();
+                return false;
+            });
         }
 
         var keyDown = function(evt) {
@@ -54,28 +55,10 @@ INVADERS.services.inputService = {
 
         window.addEventListener('keydown', keyDown, true);
         window.addEventListener('keyup', keyUp, true);
-
-        leftButton.addEventListener('touchstart', function (e) {
-            applyTouchAction('leftDown', true, e);
-        });
-
-        leftButton.addEventListener('touchend', function (e) {
-            applyTouchAction('leftDown', false, e);
-        });
-
-        rightButton.addEventListener('touchstart', function (e) {
-            applyTouchAction('rightDown', true, e);
-        });
-
-        rightButton.addEventListener('touchend', function (e) {
-            applyTouchAction('rightDown', false, e);
-        });
-
-        fireButtonLeft.addEventListener('touchstart', function (e) {
-            applyTouchAction('fire', true, e);
-        });
-        fireButtonRight.addEventListener('touchstart', function (e) {
-            applyTouchAction('fire', true, e);
-        });
+        applyTouchActionListener(leftButton, 'touchstart', 'leftDown', true);
+        applyTouchActionListener(leftButton, 'touchend', 'leftDown', false);
+        applyTouchActionListener(rightButton, 'touchstart', 'rightDown', true);
+        applyTouchActionListener(rightButton, 'touchend', 'rightDown', false);
+        applyTouchActionListener(fireButton, 'touchstart', 'fire', true);
     }
 };
