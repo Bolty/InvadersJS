@@ -13,14 +13,25 @@ INVADERS.controller = function () {
         that.bullets.shipFire(that.actions, that.ship).move();
         that.alienFleet.move();
         that.bullets.alienFire(that.alienFleet.fireNow(), that.alienFleet.getRandomAlien()).move();
+        that.scoreBoard.update(that.bullets.detectAlienShot(that.alienFleet.fleet));
 
-        var shipHasCrashed = that.ship.detectCrash(that.alienFleet.fleet);
-        var shipHasBeenShot = that.bullets.detectShipShot(that.ship);
-        var aliensShotCount = that.bullets.detectAlienShot(that.alienFleet.fleet);
-        var sheetComplete = that.alienFleet.fleet.length === 0;
+        if (that.shipIsDead) {
+            that.shipIsDeadCountDown--;
+            if (that.shipIsDeadCountDown < 0) {
+                startGame();
+                return;
+            }
+        } else {
+            var shipHasCrashed = that.ship.detectCrash(that.alienFleet.fleet),
+                shipHasBeenShot = that.bullets.detectShipShot(that.ship),
+                sheetComplete = that.alienFleet.fleet.length === 0;
 
-        that.scoreBoard.update(aliensShotCount);
-        if (sheetComplete) that.alienFleet.newSheet();
+            if (shipHasCrashed || shipHasBeenShot) {
+                that.shipIsDead = true;
+            } else {
+                if (sheetComplete) that.alienFleet.newSheet();
+            }
+        }
 
         window.requestAnimationFrame(gameLoop);
     };
@@ -57,23 +68,29 @@ INVADERS.controller = function () {
         that.scoreBoard = INVADERS.scoreBoard({
             canvas: that.canvas
         });
+
+        that.shipIsDead = false;
+        that.shipIsDeadCountDown = 300;
     };
 
     var startGame = function () {
-        INVADERS.services.inputService.init();
-
-        that.actions = INVADERS.services.inputService.actions;
-        that.canvas = INVADERS.canvas();
         initSheet(INVADERS.services.imageService.images);
         gameLoop();
     };
 
+    var init = function () {
+        INVADERS.services.inputService.init();
+        that.actions = INVADERS.services.inputService.actions;
+        that.canvas = INVADERS.canvas();
+        startGame();
+    };
+
     return {
-        startGame: startGame
+        init: init
     }
 };
 
 window.onload = function () {
-    var controller = INVADERS.controller();
-    INVADERS.services.imageService.getImages(controller.startGame);
+    var controller = new INVADERS.controller();
+    INVADERS.services.imageService.getImages(controller.init);
 };

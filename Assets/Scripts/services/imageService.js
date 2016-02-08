@@ -5,7 +5,7 @@ INVADERS.services = INVADERS.services || {};
 
 INVADERS.services.imageService = {
 
-    images: [],
+    images: {},
 
     getImages: function (callback) {
 

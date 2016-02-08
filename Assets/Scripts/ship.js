@@ -24,6 +24,7 @@ INVADERS.ship = function (spec) {
     that.detectCrash = function (fleet) {
         var hasCrashed = that.isColliding(fleet);
         if (hasCrashed) {
+            INVADERS.services.soundService.playSound("ShipExplode");
             that.kill();
         }
 

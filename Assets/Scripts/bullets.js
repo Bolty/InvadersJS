@@ -30,6 +30,7 @@ INVADERS.bullets = function (spec) {
 
     that.shipFire = function (actions, ship) {
         if (ship.isAlive() && actions.fire && that.shipBullets.length < maxShipBullets) {
+            INVADERS.services.soundService.playSound("ShipBullet");
             addBullet(ship, that.shipBullets, 0);
             actions.fire = false;
         }
@@ -65,19 +66,20 @@ INVADERS.bullets = function (spec) {
     };
 
     that.detectAlienShot = function (aliens) {
-        var killed = 0;
+        var score = 0;
 
         for (var i = 0; i < that.shipBullets.length; i++) {
             var bullet = that.shipBullets[i];
             var shot = bullet.isColliding(aliens);
             if (shot != null) {
+                INVADERS.services.soundService.playSound("BulletImpact");
                 bullet.y = 0; // Will be removed on next draw
+                score = score + (shot.sprite.swooping ? 25 : 10);
                 shot.sprite.kill();
-                killed++;
             }
         }
 
-        return killed;
+        return score;
     };
 
     that.detectShipShot = function (ship) {
@@ -85,10 +87,14 @@ INVADERS.bullets = function (spec) {
             var bullet = that.alienBullets[i];
             var shot = bullet.isColliding([ship]);
             if (shot != null) {
+                INVADERS.services.soundService.playSound("ShipExplode");
                 bullet.y = 0; // Will be removed on next draw
                 shot.sprite.kill();
+                return true;
             }
         }
+
+        return false;
     }
 
     return that;
